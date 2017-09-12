@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cooksys</groupId>
-	<artifactId>BasicControllerAndServicesAssignment</artifactId>
+	<artifactId>Friendlr</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>basiccontrollersandservices</name>
+	<name>Friendlr</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
