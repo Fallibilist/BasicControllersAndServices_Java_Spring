@@ -6,7 +6,7 @@ package com.cooksys.Friendlr.entity;
 /**
  * @author Greg Hill
  */
-public class Person {
+public class Person implements Comparable<Person>{
 	
 	private long id;
 	private String firstName;
@@ -66,6 +66,17 @@ public class Person {
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	@Override
+	public int compareTo(Person objectToSort) {
+		if(id < ((Person)objectToSort).getId()) {
+			return -1;
+		} else if(id == ((Person)objectToSort).getId()) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 	
 }
