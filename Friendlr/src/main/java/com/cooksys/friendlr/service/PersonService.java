@@ -32,21 +32,20 @@ public class PersonService {
 	}
 
 	public PersonDTO getPerson(Long id) {
-		for(Person person : people) {
-			if(person.getId() == id) {
-				return personMapper.toPersonDTO(person);
-			}
-		}
-		return null;
+		return personMapper
+					.toPersonDTO(people
+					.stream()
+					.filter(person -> person.getId() == id)
+					.findFirst()
+					.orElse(null));
 	}
 
 	public Person getPersonEntity(Long id) {
-		for(Person person : people) {
-			if(person.getId() == id) {
-				return person;
-			}
-		}
-		return null;
+		return people
+					.stream()
+					.filter(person -> person.getId() == id)
+					.findFirst()
+					.orElse(null);
 	}
 
 	public PersonDTO createPerson(PersonDTO personDTO) {
@@ -57,18 +56,13 @@ public class PersonService {
 	}
 
 	public PersonDTO replacePerson(Long id, PersonDTO personDTO) {
-		Person oldPerson = getPersonEntity(id);
-		
-		// Checks if a person with the given id exits
-		if(oldPerson == null) {
-			return null;			
+		// Deletes the person with the given id then assigns their id to the new person
+		if(deletePerson(id)) {
+			personDTO.setId(id);
+			people.add(personMapper.toPerson(personDTO));
+			return personDTO;
 		}
-		
-		// Overwrites the person's fields
-		oldPerson.setFirstName(personDTO.getFirstName());
-		oldPerson.setLastName(personDTO.getLastName());
-		
-		return personMapper.toPersonDTO(oldPerson);
+		return null;
 	}
 
 	public PersonDTO editPerson(Long id, PersonDTO personDTO) {
@@ -96,7 +90,11 @@ public class PersonService {
 		Person person = getPersonEntity(id);
 		
 		// Checks if the person exits and then if the remove operation was successful
-		if(person != null && people.remove(person)) {
+		if(person != null) {
+			person.getFriendList().forEach(friend -> {
+				deleteFriend(person.getId(), friend.getId());
+			});
+			people.remove(person);
 			return true;
 		} else {
 			return false;
@@ -109,12 +107,13 @@ public class PersonService {
 
 	public PersonDTO getFriend(Long id, Long friendId) {
 		// If the friend exists in the user's friends list then we return the friend
-		for(Person friendInList : getPersonEntity(id).getFriendList()) {
-			if(friendId == friendInList.getId()) {
-				return personMapper.toPersonDTO(friendInList);
-			}
-		}
-		return null;
+		return personMapper
+					.toPersonDTO(getPersonEntity(id)
+					.getFriendList()
+					.stream()
+					.filter(friendInList -> friendId == friendInList.getId())
+					.findFirst()
+					.orElse(null));
 	}
 
 	public PersonDTO addFriend(Long id, Long friendId) {
@@ -128,18 +127,20 @@ public class PersonService {
 
 	public boolean deleteFriend(Long id, Long friendId) {
 		// Checks if the friend exits and then if the remove operation was successful
-		if(getPersonEntity(id) != null) {
-			for(Person friendInList : getPersonEntity(id).getFriendList()) {
-				if(friendId == friendInList.getId()) {
-					getPersonEntity(id).getFriendList().remove(friendInList);
-					for(Person person : getPersonEntity(friendId).getFriendList()) {
-						if(id == person.getId()) {
-							getPersonEntity(friendId).getFriendList().remove(person);
-							return true;
-						}
-					}
-				}
-			}
+		if(getPersonEntity(id) != null && getPersonEntity(friendId) != null) {
+			getPersonEntity(id).getFriendList().remove(getPersonEntity(id).getFriendList()
+			.stream()
+			.filter(friendInList -> friendId == friendInList.getId())
+			.findFirst()
+			.orElse(null));
+			
+			getPersonEntity(friendId).getFriendList().remove(getPersonEntity(friendId).getFriendList()
+			.stream()
+			.filter(person -> id == person.getId())
+			.findFirst()
+			.orElse(null));
+			
+			return true;
 		}
 		return false;
 	}
