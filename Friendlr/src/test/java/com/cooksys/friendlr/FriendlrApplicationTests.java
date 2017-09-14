@@ -1,4 +1,4 @@
-package com.cooksys.Friendlr;
+package com.cooksys.friendlr;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

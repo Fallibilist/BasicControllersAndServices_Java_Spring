@@ -1,66 +1,53 @@
 /**
  * 
  */
-package com.cooksys.Friendlr.entity;
+package com.cooksys.friendlr.dto;
 
 /**
  * @author Greg Hill
+ *
  */
-public class Person implements Comparable<Person>{
+public class PersonDTO {
 	
-	private long id;
+	private Long id;
 	private String firstName;
 	private String lastName;
-	
-	public Person() {}
-	
-	/**
-	 * @param id
-	 * @param firstName
-	 * @param lastName
-	 */
-	public Person(long id, String firstName, String lastName) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-	
+
 	/**
 	 * @return the id
 	 */
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	
+
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the firstName
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	/**
 	 * @param firstName the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
+
 	/**
 	 * @return the lastName
 	 */
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	/**
 	 * @param lastName the lastName to set
 	 */
@@ -68,15 +55,18 @@ public class Person implements Comparable<Person>{
 		this.lastName = lastName;
 	}
 
-	@Override
-	public int compareTo(Person objectToSort) {
-		if(id < ((Person)objectToSort).getId()) {
-			return -1;
-		} else if(id == ((Person)objectToSort).getId()) {
-			return 0;
-		} else {
-			return 1;
-		}
+	public PersonDTO() {
 	}
 	
+	/**
+	 * @param id
+	 * @param firstName
+	 * @param lastName
+	 */
+	public PersonDTO(Long id, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 }
