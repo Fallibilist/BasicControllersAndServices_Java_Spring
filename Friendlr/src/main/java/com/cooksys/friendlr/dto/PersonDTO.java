@@ -7,12 +7,26 @@ package com.cooksys.friendlr.dto;
  * @author Greg Hill
  *
  */
-public class PersonDTO {
+public class PersonDTO implements Comparable<PersonDTO> {
 	
 	private Long id;
 	private String firstName;
 	private String lastName;
 
+	public PersonDTO() { }
+	
+	/**
+	 * @param id
+	 * @param firstName
+	 * @param lastName
+	 */
+	public PersonDTO(Long id, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
 	/**
 	 * @return the id
 	 */
@@ -55,18 +69,17 @@ public class PersonDTO {
 		this.lastName = lastName;
 	}
 
-	public PersonDTO() {
-	}
-	
 	/**
-	 * @param id
-	 * @param firstName
-	 * @param lastName
+	 * @param person object to compare this person to for sorting
 	 */
-	public PersonDTO(Long id, String firstName, String lastName) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+	@Override
+	public int compareTo(PersonDTO personDTO) {
+		if(id < personDTO.getId()) {
+			return -1;
+		} else if(id == personDTO.getId()) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 }

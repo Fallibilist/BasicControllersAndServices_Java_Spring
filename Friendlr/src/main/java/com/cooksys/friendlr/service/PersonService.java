@@ -3,9 +3,7 @@
  */
 package com.cooksys.friendlr.service;
 
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,7 @@ import com.cooksys.friendlr.mapper.PersonMapper;
 @Service
 public class PersonService {
 
-	private Set<Person> people;
+	private TreeSet<Person> people;
 	private static long index = 0;
 	
 	private PersonMapper personMapper;
@@ -29,8 +27,8 @@ public class PersonService {
 		this.personMapper = personMapper;
 	}
 
-	public Set<PersonDTO> getPeople() {
-		return people.stream().map(personMapper::toPersonDTO).collect(Collectors.toSet());
+	public TreeSet<PersonDTO> getPeople() {
+		return personMapper.toPersonDTO(people);
 	}
 
 	public PersonDTO getPerson(Long id) {
@@ -70,7 +68,7 @@ public class PersonService {
 		oldPerson.setFirstName(personDTO.getFirstName());
 		oldPerson.setLastName(personDTO.getLastName());
 		
-		return personDTO;
+		return personMapper.toPersonDTO(oldPerson);
 	}
 
 	public PersonDTO editPerson(Long id, PersonDTO personDTO) {
@@ -105,7 +103,7 @@ public class PersonService {
 		}
 	}
 
-	public Set<PersonDTO> getFriends(Long id) {
+	public TreeSet<PersonDTO> getFriends(Long id) {
 		return personMapper.toPersonDTO(getPersonEntity(id).getFriendList());
 	}
 

@@ -3,7 +3,7 @@
  */
 package com.cooksys.friendlr.controller;
 
-import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +34,7 @@ public class PersonController {
 	}
 	
 	@GetMapping
-	public Set<PersonDTO> getPeople() {
+	public TreeSet<PersonDTO> getPeople() {
 		return personService.getPeople();
 	}
 
@@ -97,7 +97,7 @@ public class PersonController {
 	}
 
 	@GetMapping("{id}/friends")
-	public Set<PersonDTO> getFriends(@PathVariable Long id) {
+	public TreeSet<PersonDTO> getFriends(@PathVariable Long id) {
 		return personService.getFriends(id);
 	}
 

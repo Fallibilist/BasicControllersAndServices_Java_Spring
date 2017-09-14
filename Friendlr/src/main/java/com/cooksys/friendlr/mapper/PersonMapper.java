@@ -3,7 +3,7 @@
  */
 package com.cooksys.friendlr.mapper;
 
-import java.util.Set;
+import java.util.TreeSet;
 
 import org.mapstruct.Mapper;
 
@@ -22,7 +22,7 @@ public interface PersonMapper {
 	
 	public Person toPerson(PersonDTO personDTO);
 	
-	public Set<PersonDTO> toPersonDTO(Set<Person> people);
+	public TreeSet<PersonDTO> toPersonDTO(TreeSet<Person> people);
 	
-	public Set<Person> toPerson(Set<PersonDTO> peopleDTO);
+	public TreeSet<Person> toPerson(TreeSet<PersonDTO> peopleDTO);
 }

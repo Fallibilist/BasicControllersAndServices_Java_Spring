@@ -3,7 +3,6 @@
  */
 package com.cooksys.friendlr.entity;
 
-import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -14,19 +13,19 @@ public class Person implements Comparable<Person> {
 	private Long id;
 	private String firstName;
 	private String lastName;
-	private Set<Person> friendList;
+	private TreeSet<Person> friendList;
 	
 	/**
 	 * @return the friendIds
 	 */
-	public Set<Person> getFriendList() {
+	public TreeSet<Person> getFriendList() {
 		return friendList;
 	}
 
 	/**
 	 * @param friendIds the friendIds to set
 	 */
-	public void setFriendList(Set<Person> friendIds) {
+	public void setFriendList(TreeSet<Person> friendIds) {
 		this.friendList = friendIds;
 	}
 
