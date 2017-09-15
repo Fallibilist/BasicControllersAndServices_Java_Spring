@@ -57,10 +57,12 @@ public class PersonService {
 
 	public PersonDTO replacePerson(Long id, PersonDTO personDTO) {
 		// Deletes the person with the given id then assigns their id to the new person
-		if(deletePerson(id)) {
-			personDTO.setId(id);
-			people.add(personMapper.toPerson(personDTO));
-			return personDTO;
+		Person person = getPersonEntity(id);
+		
+		if(person != null) {
+			person.setFirstName(personDTO.getFirstName());
+			person.setLastName(personDTO.getLastName());
+			return personMapper.toPersonDTO(person);
 		}
 		return null;
 	}
